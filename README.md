@@ -1,0 +1,1 @@
+# Eksamena_darbs_LV
