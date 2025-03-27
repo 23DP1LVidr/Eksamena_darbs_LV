@@ -23,11 +23,23 @@ public class Show {
         if(language.equalsIgnoreCase("english")){
             System.out.println("ADDING A PATIENT");
             System.out.println();
-            System.out.println("Enter patient's name, surname, birthdate, contact information (email or phone number) separated by commas");
+            System.out.println("Enter patient's name, surname, birthdate, email (separated by commas)");
+            System.out.println("Or \"exit\" to return to menu");
         } else{
             System.out.println("PACIENTA PIEVIENOŠANA");
             System.out.println();
-            System.out.println("Ievadiet pacienta vārdu, uzvārdu, dzimšanas datumu, kontaktinformācijas (e-pasts vai tālruņa numurs), atdalot ar komatiem");
+            System.out.println("Ievadiet pacienta vārdu, uzvārdu, dzimšanas datumu, e-pastu (atdalot ar komatiem)");
+            System.out.println("Vai \"exit\", lai atgrieztos menu");
+        }
+    }
+
+    public static void addPatientEnd(String language){
+        if(language.equalsIgnoreCase("english")){
+            System.out.println("Patient added!");
+            System.out.println("Add another? (\"+\"/\"-\")");
+        } else{
+            System.out.println("Pacients pievienots!");
+            System.out.println("Pievienot vēl? (\"+\"\"-\")");
         }
     }
 }
