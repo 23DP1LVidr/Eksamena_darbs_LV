@@ -8,6 +8,8 @@ public class Show {
             System.out.println("Add a person (add)");
             System.out.println("Show existing person list (show)");
             System.out.println("Find a person (find)"); 
+            System.out.println("Stop program (exit)");
+            System.out.println();
         } else{
             System.out.println("PALĪDZĪBAS IZVĒLNE");
             System.out.println();
@@ -15,6 +17,8 @@ public class Show {
             System.out.println("Pievienot personu (add)");
             System.out.println("Parādīt esošo personu sarakstu (show)");
             System.out.println("Atrast personu (find)");
+            System.out.println("Apstādināt programmu (exit)");
+            System.out.println();
         }
     }
 
@@ -40,6 +44,16 @@ public class Show {
         } else{
             System.out.println("Pacients pievienots!");
             System.out.println("Pievienot vēl? (\"+\"\"-\")");
+        }
+    }
+
+    public static void header(String language){
+        if (language.equalsIgnoreCase("english")){
+            System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n","Name","Surname","Birthdate","Email");
+            System.out.println("|-------------------|--------------------|--------------------|-----------------------------------|");
+        }else{
+            System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n","Vārds","Uzvārds","Dzimšanas datums","E-pasts");
+            System.out.println("|-------------------|--------------------|--------------------|-----------------------------------|");
         }
     }
 }

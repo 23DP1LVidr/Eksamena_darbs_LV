@@ -5,7 +5,11 @@ import java.util.ArrayList;
  
  
 public class PatientManager {
-    public void getPatientList() throws Exception {
+    private int PatientCount;
+
+    public int getPatientList() throws Exception {
+
+        PatientCount = 0;
  
         ArrayList<Patient> patientList = new ArrayList<>();
         BufferedReader reader = Helper.getReader("Patients.csv");
@@ -22,8 +26,11 @@ public class PatientManager {
         }
 
         for (Patient patient : patientList){
-            System.out.println(patient);
+            System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.GetBirthdate(),patient.GetEmail());
+            PatientCount+=1;
         }
+
+        return PatientCount;
     }   
 
     public void addPatient(String patientsInfo) throws Exception{
@@ -31,5 +38,28 @@ public class PatientManager {
         writer.write(patientsInfo);
         writer.newLine();
         writer.close();
+    }
+
+    public void findPatient(String keyword) throws Exception{
+
+        ArrayList<Patient> patientList = new ArrayList<>();
+        BufferedReader reader = Helper.getReader("Patients.csv");
+        reader.readLine();
+        String line;
+ 
+ 
+        while ((line = reader.readLine()) != null) {
+ 
+            String[] parts = line.split(",");
+            Patient patient = new Patient(parts[0],(parts[1]),(parts[2]),(parts[3]));
+ 
+            patientList.add(patient);
+        }
+
+        for (Patient patient : patientList) {
+            if (patient.matches(keyword)) {
+                System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.GetBirthdate(),patient.GetEmail());
+            }
+        }
     }
 }

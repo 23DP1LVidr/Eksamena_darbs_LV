@@ -11,8 +11,29 @@ public class Patient {
         this.email = Email;
     }
 
+    public String GetName(){
+        return name;
+    }
+
+    public String GetSurname(){
+        return surname;
+    }
+
+    public String GetBirthdate(){
+        return birthdate;
+    }
+
+    public String GetEmail(){
+        return email;
+    }
+    
     @Override
     public String toString() {
-        return String.format("Patient [ Name: " + name + ", Surname: " + surname + " Birthdate: " + birthdate + ", Email: " + email + " ]");
+        return String.format(name + " " + surname + " " + birthdate + " " + email);
+    }
+
+    public boolean matches(String keyword) {
+        return name.contains(keyword) || surname.contains(keyword) ||
+               birthdate.contains(keyword) || email.contains(keyword);
     }
 }
