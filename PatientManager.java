@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Comparator;
  
  
 public class PatientManager {
@@ -39,7 +40,7 @@ public class PatientManager {
                 System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.GetBirthdate(),patient.GetEmail());
             }
         }
-    }
+    }   
 
     public ArrayList getPatientArrayList() throws Exception{
         
@@ -56,6 +57,8 @@ public class PatientManager {
  
             patientList.add(patient);
         }
+
+        patientList.sort(Comparator.comparing(Patient::GetName));
 
         return patientList;
     }

@@ -95,14 +95,26 @@ public class App {
 
                 if (lang.equalsIgnoreCase("english")){
                     System.out.println("Found:");
+                    System.out.println();
                 }else{
                     System.out.println("Atrasts:");
+                    System.out.println();
                 }
 
                 Show.header(lang);
 
                 manager.findPatient(findInput);
 
+                if (lang.equalsIgnoreCase("english")){
+                    System.out.println();
+                    System.out.println("Back to menu (ENTER)");
+                } else{
+                    System.out.println();
+                    System.out.println("Atgriezties uz menu (ENTER)");
+                }
+
+                scanner.nextLine();
+                Show.menu(lang);
 
 
 
