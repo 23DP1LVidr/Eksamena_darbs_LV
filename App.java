@@ -7,12 +7,11 @@ public class App {
         String lang;
         
         Console.clear();
-        System.out.println("Hello! Choose language (write \"english\" or \"latvian\" in console)");
+        System.out.println("Hello! Choose language english (E) or latvian (L)");
 
         while(true){
             lang = scanner.nextLine();
-            if (lang.equalsIgnoreCase("english") || lang.equalsIgnoreCase("latvian")){
-                Show.menu(lang);
+            if (lang.equalsIgnoreCase("E") || lang.equalsIgnoreCase("L")){
                 break;
             } else{
                 System.out.println("Incorrect input, try again");
@@ -20,41 +19,86 @@ public class App {
             }
         }
 
-        while(true){
-            String input = scanner.nextLine();
+        boolean loggedIn = false;
+        while (!loggedIn) {
+            
+            Show.startMenu(lang);
+        
+            String choice = scanner.nextLine();
+        
+            // LOGIN
+            if (choice.equalsIgnoreCase("L")) {
+                Show.logInEmail(lang);
+                String email = scanner.nextLine();
+                String correctPassword = manager.findLogin(email);
+        
+                if (correctPassword == null || correctPassword.isEmpty()) {
+                    Show.noAccout(lang);
+                    String retry = scanner.nextLine();
+                    if (retry.equalsIgnoreCase("a")) continue;
+                    else if (retry.equalsIgnoreCase("r")) break;
+                } else {
+
+                    while (true) {
+                        Show.logInPassword(lang);
+                        String inputPassword = scanner.nextLine();
+        
+                        if (inputPassword.equals(correctPassword)) {
+                            System.out.println("Successfully logged in!");
+                            loggedIn = true;
+                            break;
+                        } else {
+                            Show.incorrectPassword(lang);
+                            String retry = scanner.nextLine();
+                            if (retry.equalsIgnoreCase("a")) continue;
+                            else if (retry.equalsIgnoreCase("r")) break;
+                        }
+                    }
+                }
+        
+            // REGISTER
+            } else if (choice.equalsIgnoreCase("R")) {
+                Console.clear();
+        
+                String name = "";
+                String surname = "";
+                String email = "";
+                String password = "";
+        
+                if (lang.equalsIgnoreCase("E")) {
+                    while (true) {
+                        System.out.println("Please, enter your name and surname!");
+                        String[] info = scanner.nextLine().split(" ");
+                        if (info.length >= 2) {
+                            name = info[0];
+                            surname = info[1];
+                            break;
+                        } else {
+                            Console.clear();
+                            System.out.println("Incorrect input!");
+                        }
+                    }
+        
+                    System.out.println("Please, enter your email:");
+                    email = scanner.nextLine();
+        
+                    System.out.println("Please, enter password:");
+                    password = scanner.nextLine();
+        
+                    manager.addPatient(name,surname,email,password);
+                    Console.clear();
+                    loggedIn = true;
+                }
+            }
+        }
+
+
             
 
+        while(true){
+            String input = scanner.nextLine();
 
-
-
-
-            if(input.equalsIgnoreCase("add") ){
-
-                Show.addPatient(lang);
-                String patientsInfo = scanner.nextLine();
-
-                if (patientsInfo.equals("exit")){
-                    Show.menu(lang);
-                }else{
-                    manager.addPatient(patientsInfo);
-                    Show.addPatientEnd(lang);
-                }
-
-                while(scanner.nextLine().equals("+")){
-                    Show.addPatient(lang);
-                    patientsInfo = scanner.nextLine();
-                    manager.addPatient(patientsInfo);
-                    Show.addPatientEnd(lang);
-                }
-
-                Show.menu(lang);
-
-
-
-
-
-
-            } else if(input.equalsIgnoreCase("show")){
+            if(input.equalsIgnoreCase("show")){
 
                 int PatientCount;
                 Console.clear();
@@ -114,7 +158,7 @@ public class App {
                 }
 
                 scanner.nextLine();
-                Show.menu(lang);
+                break;
 
 
 

@@ -16,16 +16,16 @@ public class PatientManager {
         ArrayList<Patient> patientList = patientManager.getPatientArrayList();
 
         for (Patient patient : patientList){
-            System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.GetBirthdate(),patient.GetEmail());
+            System.out.printf("|%-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.getEmail());
             PatientCount+=1;
         }
 
         return PatientCount;
     }   
 
-    public void addPatient(String patientsInfo) throws Exception{
+    public void addPatient(String name, String surname, String email, String password) throws Exception{
         BufferedWriter writer = Helper.getWriter("Patients.csv", StandardOpenOption.APPEND);
-        writer.write(patientsInfo);
+        writer.write(name + "," + surname + "," + email + "," + password);
         writer.newLine();
         writer.close();
     }
@@ -37,10 +37,22 @@ public class PatientManager {
 
         for (Patient patient : patientList) {
             if (patient.matches(keyword)) {
-                System.out.printf("|%-19s| %-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.GetBirthdate(),patient.GetEmail());
+                System.out.printf("|%-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.getEmail());
             }
         }
     }   
+
+    public String findLogin(String keyword) throws Exception {
+        PatientManager patientManager = new PatientManager();
+        ArrayList<Patient> patientList = patientManager.getPatientArrayList();
+
+        for (Patient patient : patientList) {
+            if (patient.getEmail().equals(keyword)) {
+                return patient.getPassword();
+            }
+        }
+        return "";
+    }
 
     public ArrayList getPatientArrayList() throws Exception{
         

@@ -1,14 +1,14 @@
 public class Patient {
     private String name;
     private String surname;
-    private String birthdate;
     private String email;
+    private String password;
 
-    public Patient(String Name, String Surname, String Birthdate, String Email) {
+    public Patient(String Name, String Surname, String Email, String Password) {
         this.name = Name;
         this.surname = Surname;
-        this.birthdate = Birthdate;
         this.email = Email;
+        this.password = Password;
     }
 
     public String GetName(){
@@ -19,21 +19,20 @@ public class Patient {
         return surname;
     }
 
-    public String GetBirthdate(){
-        return birthdate;
+    public String getEmail(){
+        return email;
     }
 
-    public String GetEmail(){
-        return email;
+    public String getPassword(){
+        return password;
     }
     
     @Override
     public String toString() {
-        return String.format(name + " " + surname + " " + birthdate + " " + email);
+        return String.format(name + " " + surname + " " + email);
     }
 
     public boolean matches(String keyword) {
-        return name.contains(keyword) || surname.contains(keyword) ||
-               birthdate.contains(keyword) || email.contains(keyword);
+        return name.contains(keyword) || surname.contains(keyword) || email.contains(keyword);
     }
 }
