@@ -1,24 +1,49 @@
 public class Show {
-    public static void menu(String language){
+    public static void menu(String language, String user){
         Console.clear();
+
         if(language.equalsIgnoreCase("E")){
-            System.out.println("HELP MENU");
-            System.out.println();
-            System.out.println("Choose the command and type the keyword in brackets");
-            System.out.println("Add a person (add)");
-            System.out.println("Show existing person list (show)");
-            System.out.println("Find a person (find)"); 
-            System.out.println("Stop program (exit)");
-            System.out.println();
+            System.out.println("╔══════════════════════════════════════════════════════════════╗");
+            System.out.println("║             _   _                 _ _        _               ║");
+            System.out.println("║            | | | |               (_) |      | |              ║");
+            System.out.println("║            | |_| | ___  ___ _ __  _| |_ __ _| |              ║");
+            System.out.println("║            |  _  |/ _ \\/ __| '_ \\| | __/ _` | |              ║");
+            System.out.println("║            | | | | (_) \\__ \\ |_) | | || (_| | |              ║");
+            System.out.println("║            |_| |_|\\___/|___/ .__/|_|\\__\\__,_|_|              ║");
+            System.out.println("║                            | |                               ║");
+            System.out.println("║                            |_|                               ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            System.out.println("║                        Welcome back,                         ║");
+            System.out.printf("║%" + (62-user.length())/2 + "s%s%" + (62 - (62-user.length())/2 - user.length()) + "s║\n", "", user, "");
+            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            System.out.println("║  Available Commands:                                         ║");
+            System.out.println("║    [1] Add an appointment                                    ║");
+            System.out.println("║    [2] View appointments                                     ║");
+            System.out.println("║    [3] E-shop                                                ║");
+            System.out.println("║    [4]                                                       ║");
+            System.out.println("║    [5] Exit                                                  ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════╝");
         } else{
-            System.out.println("PALĪDZĪBAS IZVĒLNE");
-            System.out.println();
-            System.out.println("Izvēlieties komandu un ievadiet atslēgvārdu iekavās");
-            System.out.println("Pievienot personu (add)");
-            System.out.println("Parādīt esošo personu sarakstu (show)");
-            System.out.println("Atrast personu (find)");
-            System.out.println("Apstādināt programmu (exit)");
-            System.out.println();
+            System.out.println("╔══════════════════════════════════════════════════════════════╗");
+            System.out.println("║             _   _                 _ _        _               ║");
+            System.out.println("║            | | | |               (_) |      | |              ║");
+            System.out.println("║            | |_| | ___  ___ _ __  _| |_ __ _| |              ║");
+            System.out.println("║            |  _  |/ _ \\/ __| '_ \\| | __/ _` | |              ║");
+            System.out.println("║            | | | | (_) \\__ \\ |_) | | || (_| | |              ║");
+            System.out.println("║            |_| |_|\\___/|___/ .__/|_|\\__\\__,_|_|              ║");
+            System.out.println("║                            | |                               ║");
+            System.out.println("║                            |_|                               ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            System.out.println("║                         Sveicināti!                          ║");
+            System.out.printf("║%" + (62-user.length())/2 + "s%s%" + (62 - (62-user.length())/2 - user.length()) + "s║\n", "", user, "");
+            System.out.println("╠══════════════════════════════════════════════════════════════╣");
+            System.out.println("║  Ievadiet komandu:                                           ║");
+            System.out.println("║    [1] Pievienot pierakstu                                   ║");
+            System.out.println("║    [2] Apskatīt pierakstus                                   ║");
+            System.out.println("║    [3] E-veikals                                             ║");
+            System.out.println("║    [4]                                                       ║");
+            System.out.println("║    [5] Exit                                                  ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════╝");
         }
     }
 
@@ -93,38 +118,15 @@ public class Show {
         }
     }
 
-    public static void addPatient(String language){
+    public static void appointmentListHeader(String language){
         Console.clear();
-        if(language.equalsIgnoreCase("E")){
-            System.out.println("ADDING A PATIENT");
-            System.out.println();
-            System.out.println("Enter patient's name, surname, birthdate, email (separated by commas)");
-            System.out.println("Or \"exit\" to return to menu");
-        } else{
-            System.out.println("PACIENTA PIEVIENOŠANA");
-            System.out.println();
-            System.out.println("Ievadiet pacienta vārdu, uzvārdu, dzimšanas datumu, e-pastu (atdalot ar komatiem)");
-            System.out.println("Vai \"exit\", lai atgrieztos menu");
-        }
-    }
-
-    public static void addPatientEnd(String language){
-        if(language.equalsIgnoreCase("E")){
-            System.out.println("Patient added!");
-            System.out.println("Add another? (\"+\"/\"-\")");
-        } else{
-            System.out.println("Pacients pievienots!");
-            System.out.println("Pievienot vēl? (\"+\"\"-\")");
-        }
-    }
-
-    public static void header(String language){
-        if (language.equalsIgnoreCase("E")){
-            System.out.printf("|%-19s| %-19s| %-34s| \n","Name","Surname","Email");
-            System.out.println("|-------------------|--------------------|-----------------------------------|");
-        }else{
-            System.out.printf("|%-19s| %-19s| %-34s| \n","Vārds","Uzvārds","E-pasts");
-            System.out.println("|-------------------|--------------------|-----------------------------------|");
+        if (language.equalsIgnoreCase(language)){
+            System.out.println("╔══════════════════════════════════════════════════════════════╗");
+            System.out.println("║                      YOUR APPOINTMENTS                       ║");
+            System.out.println("╠════╦════════════╦══════════╦═════════════════════════════════╣");
+            System.out.println("║ NR ║    DATE    ║   TIME   ║            APPOINTMENT          ║");
+            System.out.println("╠════╬════════════╬══════════╬═════════════════════════════════╣");
+            System.out.println("║ 1. ║ 2025.20.23 ║  12:20   ║            APPOINTMENT          ║");
         }
     }
 }

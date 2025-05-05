@@ -1,73 +1,69 @@
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class App {
-    public static void main(String[] args) throws Exception{
-        PatientManager manager = new PatientManager();
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         String lang;
-        
+
         Console.clear();
         System.out.println("Hello! Choose language english (E) or latvian (L)");
 
-        while(true){
+        while (true) {
             lang = scanner.nextLine();
-            if (lang.equalsIgnoreCase("E") || lang.equalsIgnoreCase("L")){
-                break;
-            } else{
-                System.out.println("Incorrect input, try again");
-                continue;
-            }
+            if (lang.equalsIgnoreCase("E") || lang.equalsIgnoreCase("L")) break;
+            System.out.println("Incorrect input, try again");
         }
 
         boolean loggedIn = false;
+        String user = "";
+
         while (!loggedIn) {
-            
             Show.startMenu(lang);
-        
             String choice = scanner.nextLine();
-        
-            // LOGIN
+
+            // LOG IN
             if (choice.equalsIgnoreCase("L")) {
                 Show.logInEmail(lang);
                 String email = scanner.nextLine();
-                String correctPassword = manager.findLogin(email);
-        
+                String correctPassword = PatientManager.findLogin(email);
+
                 if (correctPassword == null || correctPassword.isEmpty()) {
                     Show.noAccout(lang);
                     String retry = scanner.nextLine();
                     if (retry.equalsIgnoreCase("a")) continue;
-                    else if (retry.equalsIgnoreCase("r")) break;
+                    else break;
                 } else {
-
                     while (true) {
                         Show.logInPassword(lang);
                         String inputPassword = scanner.nextLine();
-        
+
                         if (inputPassword.equals(correctPassword)) {
-                            System.out.println("Successfully logged in!");
+                            System.out.println(lang.equalsIgnoreCase("E") ? "Successfully logged in!" : "Veiksmīgi!");
                             loggedIn = true;
+                            user = email;
                             break;
                         } else {
                             Show.incorrectPassword(lang);
                             String retry = scanner.nextLine();
                             if (retry.equalsIgnoreCase("a")) continue;
-                            else if (retry.equalsIgnoreCase("r")) break;
+                            else break;
                         }
                     }
                 }
-        
+
             // REGISTER
             } else if (choice.equalsIgnoreCase("R")) {
                 Console.clear();
-        
-                String name = "";
-                String surname = "";
-                String email = "";
-                String password = "";
-        
+
+                String name, surname, email, password;
+
                 if (lang.equalsIgnoreCase("E")) {
                     while (true) {
-                        System.out.println("Please, enter your name and surname!");
+                        System.out.println(lang.equalsIgnoreCase("E") ? "Please, enter your name and surname:" : "Lūdzu, ievadiet savu vārdu un uzvārdu:");
                         String[] info = scanner.nextLine().split(" ");
                         if (info.length >= 2) {
                             name = info[0];
@@ -78,101 +74,75 @@ public class App {
                             System.out.println("Incorrect input!");
                         }
                     }
-        
-                    System.out.println("Please, enter your email:");
+
+                    System.out.println(lang.equalsIgnoreCase("E") ? "Please, enter your email:" : "Lūdzu, ievadiet savu e-pastu:");
                     email = scanner.nextLine();
-        
-                    System.out.println("Please, enter password:");
+
+                    System.out.println(lang.equalsIgnoreCase("E") ? "Please, enter password:" : "Lūdzu, ievadiet paroli:");
                     password = scanner.nextLine();
-        
-                    manager.addPatient(name,surname,email,password);
+
+                    PatientManager.addPatient(name, surname, email, password);
                     Console.clear();
                     loggedIn = true;
+                    user = email;
                 }
             }
         }
 
 
-            
 
-        while(true){
+        Show.menu(lang, user);
+
+        while (true) {
             String input = scanner.nextLine();
 
-            if(input.equalsIgnoreCase("show")){
+            //ADD APPOINTMENT
+            if (input.equalsIgnoreCase("1")) {
+                Console.clear();
+            
+                System.out.println(lang.equalsIgnoreCase("E") ? "When will you sign up? (yyyy-MM-dd HH:mm)" : "Kad jūs pierakstīt? (gggg-MM-dd SS:mm)");
+                String dateTimeInput = scanner.nextLine();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                LocalDateTime dateTime;
+            
+                try {
+                    dateTime = LocalDateTime.parse(dateTimeInput, formatter);
+                } catch (DateTimeParseException e) {
+                    System.out.println(lang.equalsIgnoreCase("E") ? "Invalid date! Exmample: 2025-12-23 10:20" : "Nepareizs datums! Piemērs: 2025-12-23 10:20");
+                    System.out.println(lang.equalsIgnoreCase("E") ? "Back to menu (ENTER)": "Atpakaļ (ENTER)");
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, user);
+                    continue;
+                }
+            
+                System.out.println(lang.equalsIgnoreCase("E") ? "Enter appointment reason:" : "Ievadi pieraksta iemeslu:");
+                String description = scanner.nextLine();
+            
+                int newID = AppointmentManager.getAppointmentArrayList().size() + 1;
+                AppointmentManager.addAppointment(user, dateTime, description, newID);
+            
+                System.out.println(lang.equalsIgnoreCase("E") ? "Appointment added!" : "Pieraksts pievienots!");
+                System.out.println(lang.equalsIgnoreCase("E") ? "Back to menu (ENTER)" : "Atgriezties uz menu (ENTER)");
+                scanner.nextLine();
+                Console.clear();
+                Show.menu(lang, user);
+            }
 
-                int PatientCount;
+
+            //SEE ALL APPOINTMENTS
+            else if(input.equalsIgnoreCase("2")){
                 Console.clear();
                 
-                Show.header(lang);
-
-                PatientCount = manager.getPatientList();
-
-                if (lang.equalsIgnoreCase("english")){
-                    System.out.println("Total " + PatientCount + " entries");
-                    System.out.println();
-                    System.out.println("Back to menu (ENTER)");
-                } else{
-                    System.out.println("Kopumā " + PatientCount + " ieraksti");
-                    System.out.println();
-                    System.out.println("Atgriezties uz menu (ENTER)");
-                }
-
-                scanner.nextLine();
-                Show.menu(lang);
-
-
-
-
-
-            } else if(input.equalsIgnoreCase("find")){
-                
-                Console.clear();
-
-                if (lang.equalsIgnoreCase("english")){
-                    System.out.println("What to search for?");
-                }else{
-                    System.out.println("Ko meklēt?");
-                }
-
-                String findInput = scanner.nextLine();
-                Console.clear();
-
-                if (lang.equalsIgnoreCase("english")){
-                    System.out.println("Found:");
-                    System.out.println();
-                }else{
-                    System.out.println("Atrasts:");
-                    System.out.println();
-                }
-
-                Show.header(lang);
-
-                manager.findPatient(findInput);
-
-                if (lang.equalsIgnoreCase("english")){
-                    System.out.println();
-                    System.out.println("Back to menu (ENTER)");
-                } else{
-                    System.out.println();
-                    System.out.println("Atgriezties uz menu (ENTER)");
-                }
-
-                scanner.nextLine();
-                break;
-
-
-
-
-            } else if(input.equalsIgnoreCase("exit")){
+            } 
+            
+            
+            
+            else if(input.equalsIgnoreCase("5")){
 
                 Console.clear();
 
-                if (lang.equalsIgnoreCase("english")){
-                    System.out.println("Thanks for using, bye!");
-                }else{
-                    System.out.println("Paldies par izmantošanu, visu labu!");
-                }
-
+                System.out.println(lang.equalsIgnoreCase("E") ? "Thanks for using, bye!" : "Paldies par izmantošanu, visu labu!");
                 break;
             }
         }

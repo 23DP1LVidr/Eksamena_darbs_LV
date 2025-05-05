@@ -6,43 +6,29 @@ import java.util.Comparator;
  
  
 public class PatientManager {
-    private int PatientCount;
 
-    public int getPatientList() throws Exception {
-
-        PatientCount = 0;
- 
-        PatientManager patientManager = new PatientManager();
-        ArrayList<Patient> patientList = patientManager.getPatientArrayList();
-
-        for (Patient patient : patientList){
-            System.out.printf("|%-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.getEmail());
-            PatientCount+=1;
-        }
-
-        return PatientCount;
-    }   
-
-    public void addPatient(String name, String surname, String email, String password) throws Exception{
+    public static void addPatient(String name, String surname, String email, String password) throws Exception{
         BufferedWriter writer = Helper.getWriter("Patients.csv", StandardOpenOption.APPEND);
         writer.write(name + "," + surname + "," + email + "," + password);
         writer.newLine();
         writer.close();
     }
 
-    public void findPatient(String keyword) throws Exception{
+    public static Patient findPatient(String keyword) throws Exception {
 
         PatientManager patientManager = new PatientManager();
         ArrayList<Patient> patientList = patientManager.getPatientArrayList();
-
+    
         for (Patient patient : patientList) {
             if (patient.matches(keyword)) {
-                System.out.printf("|%-19s| %-19s| %-34s| \n",patient.GetName(),patient.GetSurname(),patient.getEmail());
+                return patient;
             }
         }
-    }   
+    
+        throw new Exception("No matching patient found.");
+    }
 
-    public String findLogin(String keyword) throws Exception {
+    public static String findLogin(String keyword) throws Exception {
         PatientManager patientManager = new PatientManager();
         ArrayList<Patient> patientList = patientManager.getPatientArrayList();
 
