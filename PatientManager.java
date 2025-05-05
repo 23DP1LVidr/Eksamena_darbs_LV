@@ -28,7 +28,21 @@ public class PatientManager {
         throw new Exception("No matching patient found.");
     }
 
-    public static String findLogin(String keyword) throws Exception {
+    public static String findName(String keyword) throws Exception {
+
+        PatientManager patientManager = new PatientManager();
+        ArrayList<Patient> patientList = patientManager.getPatientArrayList();
+    
+        for (Patient patient : patientList) {
+            if (patient.matches(keyword)) {
+                return patient.getName();
+            }
+        }
+    
+        throw new Exception("No matching patient found.");
+    }
+
+    public static String findPassword(String keyword) throws Exception {
         PatientManager patientManager = new PatientManager();
         ArrayList<Patient> patientList = patientManager.getPatientArrayList();
 
@@ -56,7 +70,7 @@ public class PatientManager {
             patientList.add(patient);
         }
 
-        patientList.sort(Comparator.comparing(Patient::GetName));
+        patientList.sort(Comparator.comparing(Patient::getName));
 
         return patientList;
     }

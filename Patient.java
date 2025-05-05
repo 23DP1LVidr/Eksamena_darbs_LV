@@ -11,7 +11,7 @@ public class Patient {
         this.password = Password;
     }
 
-    public String GetName(){
+    public String getName(){
         return name;
     }
 
