@@ -35,4 +35,18 @@ public class AppointmentManager {
         writer.newLine();
         writer.close();
     }
+
+    public static ArrayList findAppointment(String keyword) throws Exception{
+
+        ArrayList<Appointment> appointments = getAppointmentArrayList();
+        ArrayList<Appointment> usersAppointments = new ArrayList<>();
+
+        for (Appointment appointment : appointments) {
+            if (appointment.getUser().equals(keyword)) {
+                usersAppointments.add(appointment);
+            }
+        }
+
+        return usersAppointments;
+    }
 }

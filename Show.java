@@ -120,13 +120,13 @@ public class Show {
 
     public static void appointmentListHeader(String language){
         Console.clear();
-        if (language.equalsIgnoreCase(language)){
-            System.out.println("╔══════════════════════════════════════════════════════════════╗");
-            System.out.println("║                      YOUR APPOINTMENTS                       ║");
-            System.out.println("╠════╦════════════╦══════════╦═════════════════════════════════╣");
-            System.out.println("║ NR ║    DATE    ║   TIME   ║            APPOINTMENT          ║");
-            System.out.println("╠════╬════════════╬══════════╬═════════════════════════════════╣");
-            System.out.println("║ 1. ║ 2025.20.23 ║  12:20   ║            APPOINTMENT          ║");
+        if (language.equalsIgnoreCase("E")){
+            System.out.println("╔════════════════════════════════════════════════════════════╗");
+            System.out.println("║                      YOUR APPOINTMENTS                     ║");
+            System.out.println("╠════╦════════════╦════════╦═════════════════════════════════╣");
+            System.out.println("║ NR ║    DATE    ║  TIME  ║            APPOINTMENT          ║");
+            System.out.println("╠════╬════════════╬════════╬═════════════════════════════════╣");
+
         }
     }
 }

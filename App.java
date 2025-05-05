@@ -1,5 +1,5 @@
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -24,6 +24,8 @@ public class App {
         while (!loggedIn) {
             Show.startMenu(lang);
             String choice = scanner.nextLine();
+
+
 
             // LOG IN
             if (choice.equalsIgnoreCase("L")) {
@@ -54,6 +56,8 @@ public class App {
                         }
                     }
                 }
+
+
 
             // REGISTER
             } else if (choice.equalsIgnoreCase("R")) {
@@ -96,20 +100,21 @@ public class App {
         while (true) {
             String input = scanner.nextLine();
 
+
             //ADD APPOINTMENT
             if (input.equalsIgnoreCase("1")) {
                 Console.clear();
             
-                System.out.println(lang.equalsIgnoreCase("E") ? "When will you sign up? (yyyy-MM-dd HH:mm)" : "Kad jūs pierakstīt? (gggg-MM-dd SS:mm)");
-                String dateTimeInput = scanner.nextLine();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                LocalDateTime dateTime;
+                    System.out.println(lang.equalsIgnoreCase("E") ? "When will you sign up? (yyyy-MM-dd HH:mm)" : "Kad jūs pierakstīt? (gggg-MM-dd SS:mm)");
+                    String dateTimeInput = scanner.nextLine();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    LocalDateTime dateTime;
             
                 try {
                     dateTime = LocalDateTime.parse(dateTimeInput, formatter);
                 } catch (DateTimeParseException e) {
                     System.out.println(lang.equalsIgnoreCase("E") ? "Invalid date! Exmample: 2025-12-23 10:20" : "Nepareizs datums! Piemērs: 2025-12-23 10:20");
-                    System.out.println(lang.equalsIgnoreCase("E") ? "Back to menu (ENTER)": "Atpakaļ (ENTER)");
+                    System.out.println(lang.equalsIgnoreCase("E") ? "Back to menu (ENTER)": "Atgriezties uz menu (ENTER)");
                     scanner.nextLine();
                     Console.clear();
                     Show.menu(lang, user);
@@ -131,13 +136,32 @@ public class App {
 
 
             //SEE ALL APPOINTMENTS
-            else if(input.equalsIgnoreCase("2")){
+            else if(input.equalsIgnoreCase("2")) {
                 Console.clear();
-                
-            } 
+            
+                Show.appointmentListHeader(lang);
+                int nr = 1;
+                ArrayList<Appointment> appointments = AppointmentManager.findAppointment(user);
+            
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            
+                for (Appointment appointment : appointments) {
+                    String date = appointment.getDateTime().format(dateFormatter);
+                    String time = appointment.getDateTime().format(timeFormatter);
+            
+                    System.out.printf("║ %-2d ║ %-10s ║ %-6s ║ %-31s ║\n", nr++, date, time, appointment.getDescription());
+                }
+                System.out.println("╚════╩════════════╩════════╩═════════════════════════════════╝");
+
+                System.out.println(lang.equalsIgnoreCase("E") ? "Back to menu (ENTER)" : "Atgriezties uz menu (ENTER)");
+                scanner.nextLine();
+                Console.clear();
+                Show.menu(lang, user);
+            }
             
             
-            
+            // EXIT
             else if(input.equalsIgnoreCase("5")){
 
                 Console.clear();
