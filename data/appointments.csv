@@ -1,6 +1,6 @@
 user,date,description,ID
-admin,2023-08-12 12:20,System maintnance,1
-admin,2024-08-12 12:30,System maintnance,2
+admin,2023-08-12 12:20,System maintenance,1
+admin,2024-08-12 12:30,System maintenance,2
 janis.liepins@gmail.com,2025-06-01 11:00,Dental cleaning,3
 janis.liepins@gmail.com,2025-06-15 13:30,Blood test,4
 anna.berzina@gmail.com,2025-06-02 12:00,Eye exam,5
@@ -29,3 +29,5 @@ guntis.vitols@gmail.com,2025-06-16 11:00,Lung function test,27
 santa.dzenite@gmail.com,2025-06-21 13:15,Back pain follow-up,28
 rolands.abols@gmail.com,2025-06-27 17:00,Hearing test,29
 madara.skudra@gmail.com,2025-06-28 10:00,Skin check,30
+janis.liepins@gmail.com,2025-12-20 12:30,Overall checkup,31
+admin,2025-07-12 10:30,System maintenance,32

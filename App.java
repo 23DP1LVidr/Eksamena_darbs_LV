@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.time.Duration;
@@ -208,105 +209,111 @@ public class App {
                 Console.clear();
                 List<Product> products = ProductManager.getAllProducts();
             
-                if (products.isEmpty()) {
-                    Show.noAvailableProducts(lang);
-                    scanner.nextLine();
-                    Console.clear();
-                    Show.menu(lang, userName);
-                    continue;
-                }
-            
-                // product list
-                Show.producttListHeader(lang);
-                for (Product p : products) {
-                    System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n",p.getId(), p.getName(), p.getDescription(), p.getPrice());
-                }
-                Show.productListFooter(lang);
+                while (true) {
 
-                String prodInput = scanner.nextLine();
+                    // Display product list
+                    Show.productListHeader(lang);
+                    for (int i = 0; i < products.size(); i++) {
+                        Product p = products.get(i);
+                        System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
+                    }
+                    Show.productListFooter(lang);
             
-                // invalid input
-                int productId;
-                try {
-                    productId = Integer.parseInt(prodInput);
-                } catch (NumberFormatException e) {
-                    Show.invalidInput(lang);
-                    scanner.nextLine();
-                    Console.clear();
-                    Show.menu(lang, userName);
-                    continue;
-                }
+                    String prodInput = scanner.nextLine().trim();
             
-                // select product
-                String productName = "";
-                Product selectedProduct = null;
-                for (Product p : products) {
-                    if (p.getId() == productId) {
-                        selectedProduct = p;
-                        productName = p.getName();
+                    if (prodInput.isEmpty()) {
+                        Console.clear();
+                        Show.menu(lang, userName);
                         break;
                     }
-                }
             
-                if (selectedProduct == null) {
-                    Show.invalidInput(lang);
-                    scanner.nextLine();
-                    Console.clear();
-                    Show.menu(lang, userName);
-                    continue;
-                }
+                    int productId = 0;
             
-                // highlighted list
-                Show.producttListHeader(lang); 
-                for (Product p : products) {
-                    if (p == selectedProduct){
-                        System.out.printf("\u001B[36m");
+                    if (prodInput.equalsIgnoreCase("N")) {
+                        products.sort(Comparator.comparing(Product::getName, String.CASE_INSENSITIVE_ORDER));
+                        Console.clear();
+                        continue;
+                    } else if (prodInput.equalsIgnoreCase("P")) {
+                        products.sort(Comparator.comparingDouble(Product::getPrice));
+                        Console.clear();
+                        continue;
+                    } else {
+                        try {
+                            productId = Integer.parseInt(prodInput);
+                        } catch (NumberFormatException e) {
+                            Show.invalidInput(lang);
+                            scanner.nextLine();
+                            Console.clear();
+                            Show.menu(lang, userName);
+                            break;
+                        }
                     }
-                    System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n",p.getId(), p.getName(), p.getDescription(), p.getPrice());
-                    if (p == selectedProduct){
-                        System.out.printf("\u001B[0m");
+            
+                    // Select product
+                    Product selectedProduct;
+                    try {
+                        selectedProduct = products.get(productId - 1);
+                    } catch (IndexOutOfBoundsException e) {
+                        Show.invalidInput(lang);
+                        scanner.nextLine();
+                        Console.clear();
+                        Show.menu(lang, userName);
+                        break;
                     }
-                }
-                Show.productCountListFooter(lang);
-                int qty;
-                try {
-                    qty = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    Show.invalidInput(lang);
+                    String productName = selectedProduct.getName();
+            
+                    // Highlight selected product
+                    Show.productListHeader(lang);
+                    for (int i = 0; i < products.size(); i++) {
+                        Product p = products.get(i);
+                        
+                        if (p == selectedProduct) System.out.print("\u001B[36m");
+                        System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
+                        if (p == selectedProduct) System.out.print("\u001B[0m");
+                    }
+                    Show.productCountListFooter(lang);
+            
+                    int qty;
+                    try {
+                        qty = Integer.parseInt(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        Show.invalidInput(lang);
+                        scanner.nextLine();
+                        Console.clear();
+                        Show.menu(lang, userName);
+                        break;
+                    }
+            
+                    if (qty <= 0 || qty > selectedProduct.getStock()) {
+                        Show.outOfStock(lang);
+                        scanner.nextLine();
+                        Console.clear();
+                        Show.menu(lang, userName);
+                        break;
+                    }
+            
+                    int newStock = selectedProduct.getStock() - qty;
+                    ProductManager.updateStock(productId, newStock);
+            
+                    double totalPrice = qty * selectedProduct.getPrice();
+                    Show.productBought(lang, productName, qty, totalPrice);
+            
                     scanner.nextLine();
                     Console.clear();
                     Show.menu(lang, userName);
-                    continue;
+                    break;
                 }
-            
-                if (qty <= 0 || qty > selectedProduct.getStock()) {
-                    Show.outOfStock(lang);
-                    scanner.nextLine();
-                    Console.clear();
-                    Show.menu(lang, userName);
-                    continue;
-                }
-            
-                int newStock = selectedProduct.getStock() - qty;
-                ProductManager.updateStock(productId, newStock);
-            
-                double totalPrice = qty * selectedProduct.getPrice();
-                Show.productBought(lang, productName, qty, totalPrice);
-            
-                scanner.nextLine();
-                Console.clear();
-                Show.menu(lang, userName);
-                continue;
             }
             
             
+            
             // EXIT
-            else if(input.equalsIgnoreCase("5")){
+            else if(input.equalsIgnoreCase("4")){
                 Console.clear();
                 Show.exit(lang);
                 break;
             }
-        scanner.close(); 
         }
+        scanner.close(); 
     }
 }
