@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -186,25 +187,117 @@ public class App {
                     continue;
                 }
             
-                try {
-                    int selection = Integer.valueOf(inputLine);
-                    if (selection < 1 || selection > appointments.size()) {
-                        System.out.println("Invalid number!");
-                    } else {
-                        Appointment toRemove = appointments.get(selection - 1);
-                        AppointmentManager.deleteAppointment(toRemove.getID());
-                        System.out.println("Appointment deleted successfully.");
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Please enter a valid number.");
+                int selection = Integer.valueOf(inputLine);
+                if (selection < 1 || selection > appointments.size()) {
+                    Show.invalidInput(lang);
+                } else {
+                    Appointment toRemove = appointments.get(selection - 1);
+                    AppointmentManager.deleteAppointment(toRemove.getID());
+                    Show.appointmentDeleted(lang);
                 }
             
-                System.out.println("Press ENTER to return to menu.");
                 scanner.nextLine();
                 Console.clear();
                 Show.menu(lang, userName);
+                continue;
             }
             
+            
+            //SHOP
+            else if (input.equalsIgnoreCase("3")) {
+                Console.clear();
+                List<Product> products = ProductManager.getAllProducts();
+            
+                if (products.isEmpty()) {
+                    Show.noAvailableProducts(lang);
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, userName);
+                    continue;
+                }
+            
+                // product list
+                Show.producttListHeader(lang);
+                for (Product p : products) {
+                    System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n",p.getId(), p.getName(), p.getDescription(), p.getPrice());
+                }
+                Show.productListFooter(lang);
+
+                String prodInput = scanner.nextLine();
+            
+                // invalid input
+                int productId;
+                try {
+                    productId = Integer.parseInt(prodInput);
+                } catch (NumberFormatException e) {
+                    Show.invalidInput(lang);
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, userName);
+                    continue;
+                }
+            
+                // select product
+                String productName = "";
+                Product selectedProduct = null;
+                for (Product p : products) {
+                    if (p.getId() == productId) {
+                        selectedProduct = p;
+                        productName = p.getName();
+                        break;
+                    }
+                }
+            
+                if (selectedProduct == null) {
+                    Show.invalidInput(lang);
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, userName);
+                    continue;
+                }
+            
+                // highlighted list
+                Show.producttListHeader(lang); 
+                for (Product p : products) {
+                    if (p == selectedProduct){
+                        System.out.printf("\u001B[36m");
+                    }
+                    System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n",p.getId(), p.getName(), p.getDescription(), p.getPrice());
+                    if (p == selectedProduct){
+                        System.out.printf("\u001B[0m");
+                    }
+                }
+                Show.productCountListFooter(lang);
+                int qty;
+                try {
+                    qty = Integer.parseInt(scanner.nextLine());
+                } catch (NumberFormatException e) {
+                    Show.invalidInput(lang);
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, userName);
+                    continue;
+                }
+            
+                if (qty <= 0 || qty > selectedProduct.getStock()) {
+                    Show.outOfStock(lang);
+                    scanner.nextLine();
+                    Console.clear();
+                    Show.menu(lang, userName);
+                    continue;
+                }
+            
+                int newStock = selectedProduct.getStock() - qty;
+                ProductManager.updateStock(productId, newStock);
+            
+                double totalPrice = qty * selectedProduct.getPrice();
+                Show.productBought(lang, productName, qty, totalPrice);
+            
+                scanner.nextLine();
+                Console.clear();
+                Show.menu(lang, userName);
+                continue;
+            }
             
             
             // EXIT
