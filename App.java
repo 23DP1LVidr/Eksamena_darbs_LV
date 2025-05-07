@@ -215,7 +215,7 @@ public class App {
                     Show.productListHeader(lang);
                     for (int i = 0; i < products.size(); i++) {
                         Product p = products.get(i);
-                        System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
+                        System.out.printf("║ %-2d ║ %-20s ║ %-50s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
                     }
                     Show.productListFooter(lang);
             
@@ -268,7 +268,7 @@ public class App {
                         Product p = products.get(i);
                         
                         if (p == selectedProduct) System.out.print("\u001B[36m");
-                        System.out.printf("║ %-2d ║ %-12s ║ %-35s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
+                        System.out.printf("║ %-2d ║ %-20s ║ %-50s ║ %-7s ║\n", i + 1, p.getName(), p.getDescription(), p.getPrice());
                         if (p == selectedProduct) System.out.print("\u001B[0m");
                     }
                     Show.productCountListFooter(lang);

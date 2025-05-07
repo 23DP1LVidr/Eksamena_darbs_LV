@@ -695,49 +695,49 @@ public class Show {
     public static void productListHeader(String language){
         Console.clear();
         if (language.equalsIgnoreCase("1")){
-            System.out.println("╔═══════════════════════════════════════════════════════════════════╗");
-            System.out.println("║                        AVAILABLE PRODUCTS                         ║");
-            System.out.println("╠════╦══════════════╦═════════════════════════════════════╦═════════╣");
-            System.out.println("║ NR ║     NAME     ║              DESCRIPTION            ║  PRICE  ║");
-            System.out.println("╠════╬══════════════╬═════════════════════════════════════╬═════════╣");
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("║                                      AVAILABLE PRODUCTS                                  ║");
+            System.out.println("╠════╦══════════════════════╦════════════════════════════════════════════════════╦═════════╣");
+            System.out.println("║ NR ║         NAME         ║                       DESCRIPTION                  ║  PRICE  ║");
+            System.out.println("╠════╬══════════════════════╬════════════════════════════════════════════════════╬═════════╣");
         } else{
-            System.out.println("╔═══════════════════════════════════════════════════════════════════╗");
-            System.out.println("║                          PIEEJAMĀS PRECES                         ║");
-            System.out.println("╠════╦══════════════╦═════════════════════════════════════╦═════════╣");
-            System.out.println("║ NR ║  NOSAUKUMS   ║              APRAKSTS               ║  CENA   ║");
-            System.out.println("╠════╬══════════════╬═════════════════════════════════════╬═════════╣");
+            System.out.println("╔══════════════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("║                                       PIEEJAMĀS PRECES                                   ║");
+            System.out.println("╠════╦══════════════════════╦════════════════════════════════════════════════════╦═════════╣");
+            System.out.println("║ NR ║      NOSAUKUMS       ║                       APRAKSTS                     ║  CENA   ║");
+            System.out.println("╠════╬══════════════════════╬════════════════════════════════════════════════════╬═════════╣");
         }
     }
 
     public static void productListFooter(String language){
         if (language.equalsIgnoreCase("1")){
-            System.out.println("╠════╩══════════════╩═════════════════════════════════════╩═════════╣");  
-            System.out.println("║                Sort by:    Name (N)    Price (P)                  ║");
-            System.out.println("╠═══════════════════════════════════════════════════════════════════╣");
-            System.out.println("║                      Enter number to purchase                     ║");
-            System.out.println("║                        Back to menu (ENTER)                       ║");
-            System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+            System.out.println("╠════╩══════════════════════╩════════════════════════════════════════════════════╩═════════╣");  
+            System.out.println("║                             Sort by:    Name (N)    Price (P)                            ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                   Enter number to purchase                               ║");
+            System.out.println("║                                      Back to menu (ENTER)                                ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
         } else{
-            System.out.println("╠════╩══════════════╩═════════════════════════════════════╩═════════╣");  
-            System.out.println("║            Kārtot pēc:    Nosaukuma (N)    Cenas (P)              ║");
-            System.out.println("╠═══════════════════════════════════════════════════════════════════╣");  
-            System.out.println("║                   Ievadiet vēlāmās preces numuru                  ║");
-            System.out.println("║                      Atpakaļ uz menu (ENTER)                      ║");
-            System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+            System.out.println("╠════╩══════════════════════╩════════════════════════════════════════════════════╩═════════╣");  
+            System.out.println("║                             Sort by:    Nosaukums (N)    Cena (P)                        ║");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                Ievadiet vēlāmā produkta numuru                           ║");
+            System.out.println("║                                     Atpakaļ uz menu (ENTER)                              ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
         }
     }
 
     public static void productCountListFooter(String language){
         if (language.equalsIgnoreCase("1")){
-            System.out.println("╠════╩══════════════╩═════════════════════════════════════╩═════════╣");  
-            System.out.println("║                          How many to buy?                         ║");
-            System.out.println("║                        Back to menu (ENTER)                       ║");
-            System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                        How many to buy?                                  ║");
+            System.out.println("║                                      Back to menu (ENTER)                                ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
         } else{
-            System.out.println("╠════╩══════════════╩═════════════════════════════════════╩═════════╣");  
-            System.out.println("║                       Cik vēlaties nopirkt?                       ║");
-            System.out.println("║                      Atpakaļ uz menu (ENTER)                      ║");
-            System.out.println("╚═══════════════════════════════════════════════════════════════════╝");
+            System.out.println("╠══════════════════════════════════════════════════════════════════════════════════════════╣");
+            System.out.println("║                                    Ievadiet vēlāmo daudzumu                              ║");
+            System.out.println("║                                     Atpakaļ uz menu (ENTER)                              ║");
+            System.out.println("╚══════════════════════════════════════════════════════════════════════════════════════════╝");
         }
     }
 
