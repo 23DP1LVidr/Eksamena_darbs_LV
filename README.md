@@ -115,16 +115,14 @@ id,nosaukums,apraksts,cena,krājums
 
 ## Instalēšana un iestatīšana
 
-1. Klonējiet repozitoriju:
+1. Lejuplādējiet arhīvu ar repozitoriju:
 
 ```
-git clone <repository_url>
+https://github.com/23DP1LVidr/Eksamena_darbs_LV
 ```
 
-2. Palaidiet lietojumprogrammu:
+2. Izarhivējat un palaidiet app.java
 
 ```
 java src/App
 ```
-
----
