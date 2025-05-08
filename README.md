@@ -59,8 +59,7 @@ MedicalManagementSystem/
 │ ├──── appointments.csv # Uzglabā apmeklējuma datus (lietotājs, datums, apraksts, ID)
 │ └──── products.csv # Uzglabā produktu datus (id, nosaukums, apraksts, cena, krājums)
 │
-├── README.md # Projekta dokumentācija (šis fails)
-└── LICENSE # Licences fails (pēc izvēles)
+└──  README.md # Projekta dokumentācija (šis fails)
 ```
 
 #### **CSV failu formāti**
